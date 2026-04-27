@@ -1,19 +1,27 @@
-import { Controller, Post, Body, UsePipes, ValidationPipe } from '@nestjs/common';
-import { AuthService, LoginDto, RegisterDto } from './auth.service';
+import { Body, Controller, Post } from '@nestjs/common';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   @Post('login')
-  @UsePipes(new ValidationPipe({ transform: true }))
-  async login(@Body() loginDto: LoginDto) {
-    return this.authService.login(loginDto);
-  }
+  async login(@Body() body: any) {
+    const { email, password } = body;
 
-  @Post('register')
-  @UsePipes(new ValidationPipe({ transform: true }))
-  async register(@Body() registerDto: RegisterDto) {
-    return this.authService.register(registerDto);
+    // ⚠️ AQUÍ debes traer usuario de la DB
+    const user = {
+      id: 1,
+      email: email,
+      password: '$2b$10$testhash' // ejemplo
+    };
+
+    const validatedUser = await this.authService.validateUser(
+      email,
+      password,
+      user,
+    );
+
+    return this.authService.login(validatedUser);
   }
 }

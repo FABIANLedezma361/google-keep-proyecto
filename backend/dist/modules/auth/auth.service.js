@@ -44,74 +44,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
-const jwt_1 = require("@nestjs/jwt");
 const bcrypt = __importStar(require("bcrypt"));
-const usuario_service_1 = require("../usuario/usuario.service");
+const jwt_1 = require("@nestjs/jwt");
 let AuthService = class AuthService {
-    constructor(usuarioService, jwtService) {
-        this.usuarioService = usuarioService;
+    constructor(jwtService) {
         this.jwtService = jwtService;
     }
-    async validateUser(email, password) {
-        try {
-            const usuario = await this.usuarioService.findByEmail(email);
-            const isPasswordValid = await bcrypt.compare(password, usuario.password);
-            if (isPasswordValid) {
-                const { password, ...result } = usuario;
-                return result;
-            }
-            return null;
-        }
-        catch (error) {
-            return null;
-        }
-    }
-    async login(loginDto) {
-        const user = await this.validateUser(loginDto.email, loginDto.password);
-        if (!user) {
-            throw new common_1.UnauthorizedException('Credenciales inválidas');
-        }
-        const payload = { email: user.email, sub: user.id };
-        const token = this.jwtService.sign(payload);
+    async login(user) {
+        const payload = { sub: user.id, email: user.email };
         return {
-            token,
-            user: {
-                id: user.id,
-                email: user.email,
-                nombre: user.nombre,
-                avatar: user.avatar,
-            },
+            access_token: this.jwtService.sign(payload),
         };
     }
-    async register(registerDto) {
-        const usuario = await this.usuarioService.create(registerDto);
-        const payload = { email: usuario.email, sub: usuario.id };
-        const token = this.jwtService.sign(payload);
-        return {
-            token,
-            user: {
-                id: usuario.id,
-                email: usuario.email,
-                nombre: usuario.nombre,
-                avatar: usuario.avatar,
-            },
-        };
-    }
-    async validateToken(token) {
-        try {
-            const payload = this.jwtService.verify(token);
-            const user = await this.usuarioService.findOne(payload.sub);
-            return user;
-        }
-        catch (error) {
-            throw new common_1.UnauthorizedException('Token inválido');
-        }
+    async validateUser(email, password, userFromDb) {
+        if (!userFromDb)
+            throw new common_1.UnauthorizedException();
+        const isMatch = await bcrypt.compare(password, userFromDb.password);
+        if (!isMatch)
+            throw new common_1.UnauthorizedException();
+        return userFromDb;
     }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [usuario_service_1.UsuarioService,
-        jwt_1.JwtService])
+    __metadata("design:paramtypes", [jwt_1.JwtService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

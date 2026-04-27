@@ -19,30 +19,25 @@ let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
-    async login(loginDto) {
-        return this.authService.login(loginDto);
-    }
-    async register(registerDto) {
-        return this.authService.register(registerDto);
+    async login(body) {
+        const { email, password } = body;
+        const user = {
+            id: 1,
+            email: email,
+            password: '$2b$10$testhash'
+        };
+        const validatedUser = await this.authService.validateUser(email, password, user);
+        return this.authService.login(validatedUser);
     }
 };
 exports.AuthController = AuthController;
 __decorate([
     (0, common_1.Post)('login'),
-    (0, common_1.UsePipes)(new common_1.ValidationPipe({ transform: true })),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "login", null);
-__decorate([
-    (0, common_1.Post)('register'),
-    (0, common_1.UsePipes)(new common_1.ValidationPipe({ transform: true })),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], AuthController.prototype, "register", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
