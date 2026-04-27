@@ -45,7 +45,6 @@ export class NoteService {
       throw new NotFoundException('Nota no encontrada');
     }
 
-    // Verificar si el usuario es el propietario o tiene acceso compartido
     const isOwner = note.usuarioId === usuarioId;
     const hasSharedAccess = note.shares?.some(
       (share) => share.sharedWithId === usuarioId,

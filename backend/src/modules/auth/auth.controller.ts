@@ -9,11 +9,10 @@ export class AuthController {
   async login(@Body() body: any) {
     const { email, password } = body;
 
-    // ⚠️ AQUÍ debes traer usuario de la DB
     const user = {
       id: 1,
       email: email,
-      password: '$2b$10$testhash' // ejemplo
+      password: '$2b$10$6wG39cJ/OXbPHsCoNP9Sq.qWMpiq7h5trjY/aw7vl/.WKkUngAYam'
     };
 
     const validatedUser = await this.authService.validateUser(
@@ -22,6 +21,7 @@ export class AuthController {
       user,
     );
 
+    // 🔥 ESTO FALTABA
     return this.authService.login(validatedUser);
   }
 }
