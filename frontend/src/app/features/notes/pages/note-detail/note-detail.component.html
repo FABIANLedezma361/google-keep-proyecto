@@ -1,0 +1,25 @@
+<div class="note-detail-container">
+  <div class="back-button">
+    <button (click)="goBack()">← Volver</button>
+  </div>
+
+  <div class="note-content" *ngIf="!loading && !error && note; else loadingOrError">
+    <h1>{{ note.titulo }}</h1>
+    <p class="note-text">{{ note.contenido }}</p>
+
+    <div class="note-meta">
+      <span *ngIf="note.etiquetas">Etiquetas: {{ note.etiquetas }}</span>
+      <span *ngIf="note.recordatorio">Recordatorio: {{ note.recordatorio | date:'medium' }}</span>
+      <span *ngIf="note.archivada">Archivada</span>
+    </div>
+  </div>
+
+  <ng-template #loadingOrError>
+    <div class="loading" *ngIf="loading">
+      <p>Cargando nota...</p>
+    </div>
+    <div class="error" *ngIf="error">
+      <p>Error al cargar la nota</p>
+    </div>
+  </ng-template>
+</div>

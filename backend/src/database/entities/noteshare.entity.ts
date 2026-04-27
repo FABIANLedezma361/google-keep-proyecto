@@ -19,14 +19,14 @@ export class NoteShare {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => Note, (note) => note.shares, { onDelete: 'CASCADE' })
+  @ManyToOne('Note', 'shares', { onDelete: 'CASCADE' })
   @JoinColumn()
   note: Note;
 
   @Column()
   noteId: string;
 
-  @ManyToOne(() => Usuario)
+  @ManyToOne('Usuario')
   @JoinColumn()
   sharedWith: Usuario;
 

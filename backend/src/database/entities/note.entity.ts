@@ -2,17 +2,18 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  CreateDateColumn,
+  UpdateDateColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { Usuario } from './usuario.entity';
+import { NoteShare } from './noteshare.entity';
 
-@Entity()
+@Entity('notes')
 export class Note {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @ManyToOne(() => Usuario, user => user.notes)
-  user: Usuario;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   titulo: string;
@@ -33,5 +34,20 @@ export class Note {
   recordatorio: Date;
 
   @Column({ default: false })
-  is_archived: boolean;
+  archivada: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @ManyToOne('Usuario', 'notes', { onDelete: 'CASCADE' })
+  usuario: Usuario;
+
+  @Column()
+  usuarioId: string;
+
+  @OneToMany('NoteShare', 'note')
+  shares: NoteShare[];
 }

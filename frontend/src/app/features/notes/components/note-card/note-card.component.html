@@ -1,0 +1,18 @@
+<div class="note-card" (click)="onNoteClick()" [class.archived]="note.archivada">
+  <h3>{{ note.titulo }}</h3>
+  <p class="note-content">{{ note.contenido | slice:0:100 }}{{ note.contenido.length > 100 ? '...' : '' }}</p>
+
+  <div class="note-actions">
+    <button class="archive-btn" (click)="onArchive($event)" [title]="note.archivada ? 'Desarchivar' : 'Archivar'">
+      {{ note.archivada ? '📤' : '📦' }}
+    </button>
+    <button class="delete-btn" (click)="onDelete($event)" title="Eliminar">
+      🗑️
+    </button>
+  </div>
+
+  <div class="note-meta" *ngIf="note.etiquetas || note.recordatorio">
+    <span *ngIf="note.etiquetas">🏷️ {{ note.etiquetas }}</span>
+    <span *ngIf="note.recordatorio">⏰ {{ note.recordatorio | date:'short' }}</span>
+  </div>
+</div>

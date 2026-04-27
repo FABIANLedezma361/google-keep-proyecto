@@ -16,5 +16,4 @@ export const dataSourceOptions: DataSourceOptions = {
   logging: true,
 };
 
-const dataSource = new DataSource(dataSourceOptions);
-export default dataSource;
+export default dataSourceOptions;

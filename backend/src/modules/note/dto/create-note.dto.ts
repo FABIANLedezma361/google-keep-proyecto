@@ -1,4 +1,5 @@
-import { IsString, IsOptional, IsBoolean, IsArray, IsDateString } from 'class-validator';
+import { IsString, IsOptional, IsBoolean, IsDateString } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CreateNoteDto {
   @IsString()
@@ -9,18 +10,16 @@ export class CreateNoteDto {
 
   @IsOptional()
   @IsString()
-  color?: string;
+  tipo?: string;
+
+  @IsOptional()
+  @IsString()
+  etiquetas?: string;
+
+  @IsOptional()
+  recordatorio?: Date;
 
   @IsOptional()
   @IsBoolean()
   archivada?: boolean;
-
-  @IsOptional()
-  @IsDateString()
-  recordatorio?: Date;
-
-  @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  etiquetas?: string[];
 }

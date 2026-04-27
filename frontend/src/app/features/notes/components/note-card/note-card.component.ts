@@ -1,6 +1,16 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Note } from '../../../../core/services/note.service';
+
+export interface Note {
+  id?: string;
+  titulo: string;
+  contenido: string;
+  tipo?: string;
+  etiquetas?: string;
+  checklist?: any;
+  recordatorio?: Date;
+  archivada?: boolean;
+}
 
 @Component({
   selector: 'app-note-card',

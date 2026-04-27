@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NoteService } from '../../../../core/services/note.service';
-import { Note } from '../../../../core/services/note.service';
+import { Note } from '../../components/note-card/note-card.component';
 
 @Component({
   selector: 'app-note-detail',
@@ -19,7 +18,6 @@ export class NoteDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private noteService: NoteService,
   ) {}
 
   ngOnInit(): void {
@@ -33,17 +31,18 @@ export class NoteDetailComponent implements OnInit {
 
   loadNote(id: string): void {
     this.loading = true;
-    this.noteService.getNoteById(id).subscribe({
-      next: (note) => {
-        this.note = note;
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error loading note:', error);
-        this.error = true;
-        this.loading = false;
-      },
-    });
+    // Mock data por ahora
+    setTimeout(() => {
+      this.note = {
+        id: id,
+        titulo: 'Nota de Ejemplo',
+        contenido: 'Este es el contenido detallado de la nota',
+        tipo: 'text',
+        etiquetas: 'ejemplo, prueba',
+        archivada: false
+      };
+      this.loading = false;
+    }, 500);
   }
 
   goBack(): void {

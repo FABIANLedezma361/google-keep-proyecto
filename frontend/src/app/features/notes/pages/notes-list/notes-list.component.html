@@ -1,0 +1,23 @@
+<div class="notes-list-container">
+  <h1>Mis Notas</h1>
+
+  <div class="notes-grid" *ngIf="!loading && notes.length > 0; else noNotes">
+    <app-note-card
+      *ngFor="let note of notes"
+      [note]="note"
+      (noteClick)="note.id && onNoteClick(note.id)"
+      (archive)="note.id && onArchive(note.id)"
+      (delete)="note.id && onDelete(note.id)"
+    ></app-note-card>
+  </div>
+
+  <ng-template #noNotes>
+    <div class="no-notes" *ngIf="!loading">
+      <p>No tienes notas aún. ¡Crea tu primera nota!</p>
+    </div>
+  </ng-template>
+
+  <div class="loading" *ngIf="loading">
+    <p>Cargando notas...</p>
+  </div>
+</div>
