@@ -23,28 +23,28 @@ let NoteController = class NoteController {
         this.noteService = noteService;
     }
     create(req, createNoteDto) {
-        return this.noteService.create(req.user.userId, createNoteDto);
+        return this.noteService.create(String(req.user.userId), createNoteDto);
     }
     findAll(req) {
-        return this.noteService.findAll(req.user.userId);
+        return "FUNCIONA";
     }
     findArchived(req) {
-        return this.noteService.findArchived(req.user.userId);
+        return this.noteService.findArchived(String(req.user.userId));
     }
     findOne(id, req) {
-        return this.noteService.findOne(id, req.user.userId);
+        return this.noteService.findOne(id, String(req.user.userId));
     }
     update(id, req, updateNoteDto) {
-        return this.noteService.update(id, req.user.userId, updateNoteDto);
+        return this.noteService.update(id, String(req.user.userId), updateNoteDto);
     }
     archive(id, req) {
-        return this.noteService.archive(id, req.user.userId);
+        return this.noteService.archive(id, String(req.user.userId));
     }
     unarchive(id, req) {
-        return this.noteService.unarchive(id, req.user.userId);
+        return this.noteService.unarchive(id, String(req.user.userId));
     }
     remove(id, req) {
-        return this.noteService.remove(id, req.user.userId);
+        return this.noteService.remove(id, String(req.user.userId));
     }
 };
 exports.NoteController = NoteController;

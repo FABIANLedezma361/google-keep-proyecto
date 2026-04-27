@@ -5,7 +5,7 @@ export declare class NoteController {
     private readonly noteService;
     constructor(noteService: NoteService);
     create(req: any, createNoteDto: CreateNoteDto): Promise<import("../../database/entities/note.entity").Note>;
-    findAll(req: any): Promise<import("../../database/entities/note.entity").Note[]>;
+    findAll(req: any): string;
     findArchived(req: any): Promise<import("../../database/entities/note.entity").Note[]>;
     findOne(id: string, req: any): Promise<import("../../database/entities/note.entity").Note>;
     update(id: string, req: any, updateNoteDto: UpdateNoteDto): Promise<import("../../database/entities/note.entity").Note>;

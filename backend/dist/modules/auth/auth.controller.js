@@ -24,7 +24,7 @@ let AuthController = class AuthController {
         const user = {
             id: 1,
             email: email,
-            password: '$2b$10$6wG39cJ/OXbPHsCoNP9Sq.qWMpiq7h5trjY/aw7vl/.WKkUngAYam'
+            password: '$2b$10$6wG39cJ/OXbPHsCoNP9Sq.qWMpiq7h5trjY/aw7vl/.WKkUngAYam',
         };
         const validatedUser = await this.authService.validateUser(email, password, user);
         return this.authService.login(validatedUser);
